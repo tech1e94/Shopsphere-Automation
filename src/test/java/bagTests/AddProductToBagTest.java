@@ -8,6 +8,7 @@ import pages.BagPage;
 import pages.ShoppingPage;
 
 import static base.BasePage.delay;
+import static utilities.WaitUtility.fluentWaitUntilVisible;
 
 public class AddProductToBagTest extends BaseTest {
     @Test
@@ -24,11 +25,11 @@ public class AddProductToBagTest extends BaseTest {
         String actualMailID = profilePage.getUserMailID();
         String expectedMailID = mailID;
 
-        delay(1000);
+        //fluentWaitUntilVisible(2, );
         ShoppingPage shoppingPage1 = profilePage.clickCloseButton();
 
         BagPage bagPage = shoppingPage1.addProductToBag();
-        delay(2000);
+        //delay(2000);
         String actualCount = bagPage.getProduct1Count();
         String expectedCount = "1";
 

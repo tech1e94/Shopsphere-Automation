@@ -25,6 +25,6 @@ public class SignInTest extends BaseTest {
         delay(1000);
         profilePage.clickCloseButton();
 
-        Assert.assertEquals(actualMailID, expectedMailID, "Actual mail id is differnt from the expected mail id");
+        Assert.assertEquals(actualMailID, expectedMailID, "Actual mail id is different from the expected mail id");
     }
 }
