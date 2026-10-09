@@ -1,66 +1,51 @@
 package base;
 
+import drivers.DriverManager;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.ITestResult;
-import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import pages.ShoppingPage;
+import utilities.ConfigReader;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.time.LocalDate;
-
-import static base.BasePage.*;
-import static utilities.utility.setUtilityDriver;
 
 public class BaseTest {
-    protected WebDriver driver;
-    protected BasePage basePage;
     protected ShoppingPage shoppingPage;
-    private String url = "https://v0-shopsphere-testing.vercel.app";
-
-    @BeforeClass
-    public void setUp() {
-        driver = new ChromeDriver();
-        driver.manage().window().maximize();
-        //driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
-    }
 
     @BeforeMethod
-    public void loadApplication(){
-        driver.get(url);
-        basePage = new BasePage();
-        basePage.setDriver(driver);
-        setUtilityDriver();
+    public void setUp() {
+        DriverManager.initDriver();
+        DriverManager.getDriver().get(ConfigReader.get("base.url"));
         shoppingPage = new ShoppingPage();
     }
 
-    @AfterMethod
-    public void takeFailedResultScreenshot(ITestResult testResult) {
-        if(ITestResult.FAILURE == testResult.getStatus()) {
-            TakesScreenshot screenshot = (TakesScreenshot) driver;
-            File source = screenshot.getScreenshotAs(OutputType.FILE);
-            File destination = new File(System.getProperty("user.dir") + "/resources/screenshots/" + LocalDate.now() + testResult.getName() + ".png");
-            try {
-                Files.copy(source.toPath(), destination.toPath(), StandardCopyOption.REPLACE_EXISTING);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
+    @AfterMethod(alwaysRun = true)
+    public void tearDown(ITestResult result) {
+        try {
+            if (result.getStatus() == ITestResult.FAILURE) {
+                takeScreenshot(result.getName());
             }
-
-            System.out.println("Screenshot Located At : " + destination);
+        } finally {
+            DriverManager.quitDriver();
         }
     }
 
-    @AfterClass
-    public void tearDown(){
-        delay(2000);
-        driver.quit();
+    private void takeScreenshot(String testName) {
+        File source = ((TakesScreenshot) DriverManager.getDriver()).getScreenshotAs(OutputType.FILE);
+        Path destination = Paths.get("screenshots", testName + "_" + System.currentTimeMillis() + ".png");
+        try {
+            Files.createDirectories(destination.getParent());
+            Files.copy(source.toPath(), destination, StandardCopyOption.REPLACE_EXISTING);
+            System.out.println("Screenshot saved: " + destination.toAbsolutePath());
+        } catch (IOException e) {
+            System.err.println("Could not save screenshot: " + e.getMessage());
+        }
     }
 }

@@ -3,9 +3,11 @@ package utilities;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-public class SwitchToUtility extends utility {
+import static drivers.DriverManager.getDriver;
+
+public class SwitchToUtility {
     private static WebDriver.TargetLocator switchTo() {
-        return driver.switchTo();
+        return getDriver().switchTo();
     }
 
     public static String getAlertText() {

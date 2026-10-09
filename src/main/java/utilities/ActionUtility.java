@@ -4,12 +4,13 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 
+import static drivers.DriverManager.getDriver;
 import static utilities.JavaScriptUtility.scrollToElementJS;
 import static utilities.WaitUtility.fluentWaitUntilVisible;
 
-public class ActionUtility extends utility {
+public class ActionUtility {
     private static Actions act() {
-        return new Actions(driver);
+        return new Actions(getDriver());
     }
 
     public static void dragAndDropBy(WebElement webElement, int x, int y) {
@@ -22,6 +23,6 @@ public class ActionUtility extends utility {
 
     public static void moveToTarget(By target) {
         scrollToElementJS(target);
-        act().moveToElement(driver.findElement(target)).perform();
+        act().moveToElement(getDriver().findElement(target)).perform();
     }
 }

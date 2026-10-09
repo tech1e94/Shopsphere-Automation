@@ -8,9 +8,11 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 
-public class JavaScriptUtility extends utility {
+import static drivers.DriverManager.getDriver;
+
+public class JavaScriptUtility {
     public static void scrollToElementJS(By locator) {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(10));
 
         WebElement element = wait.until(
                 ExpectedConditions.presenceOfElementLocated(locator)
@@ -18,12 +20,12 @@ public class JavaScriptUtility extends utility {
 
         String jsScript = "arguments[0].scrollIntoView({block: 'center', inline: 'center'});";
 
-        ((JavascriptExecutor) driver).executeScript(jsScript, element);
+        ((JavascriptExecutor) getDriver()).executeScript(jsScript, element);
     }
 
     public static void clickJS(By locator) {
-        WebElement element = driver.findElement(locator);
-        JavascriptExecutor executor = (JavascriptExecutor) driver;
+        WebElement element = getDriver().findElement(locator);
+        JavascriptExecutor executor = (JavascriptExecutor) getDriver();
         executor.executeScript("arguments[0].click()", element);
     }
 }

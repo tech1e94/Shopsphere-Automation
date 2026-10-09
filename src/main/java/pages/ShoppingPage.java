@@ -14,7 +14,6 @@ public class ShoppingPage extends BasePage {
     private By productAddButton = By.xpath("//article[@id='product-1']//button[text()='Add to bag']");
 
     public ProfilePage clickAccountButton(){
-        fluentWaitUntilVisible(3, accountButton);
         click(accountButton);
         return new ProfilePage();
     }

@@ -7,9 +7,11 @@ import org.openqa.selenium.support.ui.Select;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class DropDownUtility extends utility{
+import static drivers.DriverManager.getDriver;
+
+public class DropDownUtility {
     private static Select findDropDown(By locator) {
-        return new Select(driver.findElement(locator));
+        return new Select(getDriver().findElement(locator));
     }
 
     public static void selectByVisibleText(By locator, String text) {
