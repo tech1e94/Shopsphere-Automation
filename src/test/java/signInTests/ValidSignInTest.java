@@ -1,14 +1,11 @@
-package loginTests;
+package signInTests;
 
 import base.BaseTest;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import pages.ShoppingPage;
 import utilities.ConfigReader;
 
-import static base.BasePage.delay;
-
-public class SignInTest extends BaseTest {
+public class ValidSignInTest extends BaseTest {
     @Test
     public void testSignIn() {
         var signInPage = shoppingPage.clickAccountButton().clickSignInButton();

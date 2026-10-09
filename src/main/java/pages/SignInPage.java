@@ -40,5 +40,4 @@ public class SignInPage extends BasePage {
         scrollToElementJS(errorMessage);
         return find(errorMessage).getText();
     }
-
 }

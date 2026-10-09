@@ -2,7 +2,7 @@
 <suite name="ShopSphere Suite">
     <test name="Regression">
         <packages>
-            <package name="loginTests"/>
+            <package name="signInTests"/>
             <package name="bagTests"/>
         </packages>
     </test>

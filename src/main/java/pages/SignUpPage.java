@@ -13,6 +13,7 @@ public class SignUpPage extends BasePage {
     private By passwordField = By.id("auth-password");
     private By createAccountButton = By.xpath("//form//button");
     private By signInButton = By.xpath("//p//a[text()='Sign in']");
+    private By errorMessage = By.xpath("//p[@role='alert']");
 
     public void setName(String name) {
         sendKeys(find(nameField), Keys.chord(name));
@@ -32,9 +33,20 @@ public class SignUpPage extends BasePage {
         return new ShoppingPage();
     }
 
+    public SignUpPage clickCreateAccountExpectError() {
+        scrollToElementJS(createAccountButton);
+        click(createAccountButton);
+        return this;
+    }
+
     public SignInPage clickSignIn() {
         scrollToElementJS(signInButton);
         click(signInButton);
         return new SignInPage();
+    }
+
+    public String getError() {
+        scrollToElementJS(errorMessage);
+        return find(errorMessage).getText();
     }
 }

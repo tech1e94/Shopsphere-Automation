@@ -1,15 +1,11 @@
 package bagTests;
 
 import base.BaseTest;
-import loginTests.SignInTest;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import pages.BagPage;
 import pages.ShoppingPage;
 import utilities.ConfigReader;
-
-import static base.BasePage.delay;
-import static utilities.WaitUtility.fluentWaitUntilVisible;
 
 public class AddProductToBagTest extends BaseTest {
     @Test
